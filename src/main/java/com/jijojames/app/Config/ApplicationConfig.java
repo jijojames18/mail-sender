@@ -45,4 +45,8 @@ public class ApplicationConfig {
                 "spring.application.firebase.auth-credentials-env : " + getFirebaseAuthStorageEnv() + "\n"
         );
     }
+
+    public Boolean isConfigInEnv() {
+        return firebaseAuthStorageLocation == "env";
+    }
 }
