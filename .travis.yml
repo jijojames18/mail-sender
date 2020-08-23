@@ -9,5 +9,4 @@ branches:
 
 script:
   - mvn clean
-  - mvn test
   - mvn package
