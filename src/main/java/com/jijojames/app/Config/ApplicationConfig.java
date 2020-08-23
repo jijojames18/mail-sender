@@ -47,6 +47,6 @@ public class ApplicationConfig {
     }
 
     public Boolean isConfigInEnv() {
-        return firebaseAuthStorageLocation == "env";
+        return firebaseAuthStorageLocation.equals("env");
     }
 }
