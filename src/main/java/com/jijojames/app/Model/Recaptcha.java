@@ -9,7 +9,7 @@ public class Recaptcha {
     @JsonProperty("success")
     private String success;
 
-    @JsonProperty("challenge-ts")
+    @JsonProperty("challenge_ts")
     private String timeStamp;
 
     @JsonProperty("hostname")
