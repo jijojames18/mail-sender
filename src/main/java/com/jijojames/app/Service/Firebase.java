@@ -1,4 +1,4 @@
-package com.jijojames.app.Services;
+package com.jijojames.app.Service;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
