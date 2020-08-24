@@ -25,6 +25,9 @@ public class ApplicationConfig {
     @Value("${spring.application.firebase.auth-credentials-env:#{null}}")
     private String firebaseAuthStorageEnv;
 
+    @Value("${spring.application.recaptcha.site-key-env}")
+    private String recaptchaSiteKeyEnv;
+
     public String getFirebaseAuthStorageLocation() {
         return firebaseAuthStorageLocation;
     }
@@ -37,12 +40,17 @@ public class ApplicationConfig {
         return firebaseAuthStorageEnv;
     }
 
+    public String getRecaptchaSiteKeyEnv() {
+        return recaptchaSiteKeyEnv;
+    }
+
     @EventListener(ApplicationReadyEvent.class)
     public void loaded() {
         logger.info("Application loaded with properties :" + "\n" +
                 "spring.application.firebase.auth-credentials-storage : " + getFirebaseAuthStorageLocation() + "\n" +
                 "spring.application.firebase.auth-credentials-file : " + getFirebaseAuthStorageFile() + "\n" +
-                "spring.application.firebase.auth-credentials-env : " + getFirebaseAuthStorageEnv() + "\n"
+                "spring.application.firebase.auth-credentials-env : " + getFirebaseAuthStorageEnv() + "\n" +
+                "spring.application.recaptcha.site-key : " + getRecaptchaSiteKeyEnv() + "\n"
         );
     }
 
