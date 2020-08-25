@@ -2,6 +2,7 @@ package com.jijojames.app;
 
 
 import com.jijojames.app.Controller.FirestoreController;
+import com.jijojames.app.Controller.GmailController;
 import com.jijojames.app.Controller.RecaptchaController;
 import com.jijojames.app.Exception.CaptchaException;
 import com.jijojames.app.Exception.DocumentNotFoundException;
@@ -26,6 +27,9 @@ public class RestEndPointController {
     @Autowired
     private RecaptchaController recaptchaController;
 
+    @Autowired
+    private GmailController gmailController;
+
     @PostMapping("/")
     @CrossOrigin
     public String index(@RequestBody ContactForm contactForm) throws InterruptedException, ExecutionException, EmptyWebsiteException, DocumentNotFoundException, IOException, URISyntaxException, CaptchaException {
@@ -34,6 +38,7 @@ public class RestEndPointController {
         if (!recaptcha.isSuccess()) {
             throw new CaptchaException();
         }
+        gmailController.sendEmail(contactForm);
         return website.getEmail();
     }
 }
