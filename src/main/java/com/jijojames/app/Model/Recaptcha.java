@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Recaptcha {
     @JsonProperty("success")
-    private String success;
+    private String status;
 
     @JsonProperty("challenge_ts")
     private String timeStamp;
@@ -23,10 +23,10 @@ public class Recaptcha {
     }
 
     public String getSuccess() {
-        return success;
+        return status;
     }
 
     public Boolean isSuccess() {
-        return success.equals("success");
+        return status.equals("true");
     }
 }
