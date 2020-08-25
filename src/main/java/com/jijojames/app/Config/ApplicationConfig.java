@@ -25,6 +25,12 @@ public class ApplicationConfig {
     @Value("${spring.application.firebase.auth-credentials-env:#{null}}")
     private String firebaseAuthStorageEnv;
 
+    @Value("${spring.application.gmail.auth-credentials-file:#{null}}")
+    private String gmailAuthStorageFile;
+
+    @Value("${spring.application.gmail.auth-credentials-env:#{null}}")
+    private String gmailAuthStorageEnv;
+
     @Value("${spring.application.recaptcha.site-key-env}")
     private String recaptchaSiteKeyEnv;
 
@@ -40,6 +46,14 @@ public class ApplicationConfig {
         return firebaseAuthStorageEnv;
     }
 
+    public String getGmailAuthStorageFile() {
+        return gmailAuthStorageFile;
+    }
+
+    public String getGmailAuthStorageEnv() {
+        return gmailAuthStorageEnv;
+    }
+
     public String getRecaptchaSiteKeyEnv() {
         return recaptchaSiteKeyEnv;
     }
@@ -50,6 +64,8 @@ public class ApplicationConfig {
                 "spring.application.firebase.auth-credentials-storage : " + getFirebaseAuthStorageLocation() + "\n" +
                 "spring.application.firebase.auth-credentials-file : " + getFirebaseAuthStorageFile() + "\n" +
                 "spring.application.firebase.auth-credentials-env : " + getFirebaseAuthStorageEnv() + "\n" +
+                "spring.application.gmail.auth-credentials-file : " + getGmailAuthStorageFile() + "\n" +
+                "spring.application.gmail.auth-credentials-env : " + getGmailAuthStorageEnv() + "\n" +
                 "spring.application.recaptcha.site-key : " + getRecaptchaSiteKeyEnv() + "\n"
         );
     }
