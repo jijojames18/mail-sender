@@ -34,6 +34,18 @@ public class ApplicationConfig {
     @Value("${spring.application.recaptcha.site-key-env}")
     private String recaptchaSiteKeyEnv;
 
+    @Value("${spring.application.gmail.application-name}")
+    private String gmailApplicationName;
+
+    @Value("${spring.application.gmail.token-path-env}")
+    private String gmailTokenPathEnv;
+
+    @Value("${spring.application.email.from-address-env}")
+    private String emailFromAddressEnv;
+
+    @Value("${spring.application.email.subject}")
+    private String emailSubject;
+
     public String getFirebaseAuthStorageLocation() {
         return firebaseAuthStorageLocation;
     }
@@ -58,6 +70,20 @@ public class ApplicationConfig {
         return recaptchaSiteKeyEnv;
     }
 
+    public String getGmailTokenPathEnv() { return gmailTokenPathEnv; }
+
+    public String getGmailApplicationName() {
+        return gmailApplicationName;
+    }
+
+    public String getEmailFromAddressEnv() {
+        return emailFromAddressEnv;
+    }
+
+    public String getEmailSubject() {
+        return emailSubject;
+    }
+
     @EventListener(ApplicationReadyEvent.class)
     public void loaded() {
         logger.info("Application loaded with properties :" + "\n" +
@@ -66,6 +92,10 @@ public class ApplicationConfig {
                 "spring.application.firebase.auth-credentials-env : " + getFirebaseAuthStorageEnv() + "\n" +
                 "spring.application.gmail.auth-credentials-file : " + getGmailAuthStorageFile() + "\n" +
                 "spring.application.gmail.auth-credentials-env : " + getGmailAuthStorageEnv() + "\n" +
+                "spring.application.gmail.token-path-env : " + getGmailTokenPathEnv() + "\n" +
+                "spring.application.gmail.application-name: " + getGmailApplicationName() + "\n" +
+                "spring.application.email.from-address-env : " + getEmailFromAddressEnv() + "\n" +
+                "spring.application.email.subject : " + getEmailSubject() + "\n" +
                 "spring.application.recaptcha.site-key : " + getRecaptchaSiteKeyEnv() + "\n"
         );
     }
