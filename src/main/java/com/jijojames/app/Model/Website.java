@@ -16,4 +16,6 @@ public class Website {
     public String getEmail() {
         return email;
     }
+
+    public String getMailTemplate() { return mailTemplate; }
 }
