@@ -26,9 +26,7 @@ import java.util.List;
 
 @Component
 public class GoogleMail {
-    private static final String APPLICATION_NAME = "Mail Sender";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "target/tokens";
     private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_SEND);
 
     @Autowired
@@ -41,7 +39,7 @@ public class GoogleMail {
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(System.getenv(applicationConfig.getGmailTokenPathEnv()))))
                 .setAccessType("offline")
                 .build();
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
@@ -52,7 +50,7 @@ public class GoogleMail {
         if (gmail == null) {
             final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
             gmail = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                    .setApplicationName(APPLICATION_NAME)
+                    .setApplicationName(applicationConfig.getGmailApplicationName())
                     .build();
         }
         return gmail;
