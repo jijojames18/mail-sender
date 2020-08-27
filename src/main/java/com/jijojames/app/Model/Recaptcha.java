@@ -1,6 +1,5 @@
 package com.jijojames.app.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -17,10 +16,6 @@ public class Recaptcha {
 
     @JsonProperty("error-codes")
     private List<String> errorCodes;
-
-    public String getChallengeTimestamp() {
-        return timeStamp;
-    }
 
     public String getSuccess() {
         return status;

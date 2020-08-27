@@ -1,11 +1,11 @@
 package com.jijojames.app.Model;
 
 public class Website {
-    private String id;
+    private final String id;
 
-    private String mailTemplate;
+    private final String mailTemplate;
 
-    private String email;
+    private final String email;
 
     public Website(String id, String mailTemplate, String email) {
         this.id = id;
@@ -17,5 +17,7 @@ public class Website {
         return email;
     }
 
-    public String getMailTemplate() { return mailTemplate; }
+    public String getMailTemplate() {
+        return mailTemplate;
+    }
 }

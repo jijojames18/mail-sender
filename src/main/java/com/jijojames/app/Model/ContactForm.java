@@ -9,12 +9,12 @@ public class ContactForm {
 
     private Map formData;
 
-    public String getSite() {
-        return site;
-    }
-
     public String getCaptcha() {
         return captcha;
+    }
+
+    public String getSite() {
+        return site;
     }
 
     public Map getFormData() {

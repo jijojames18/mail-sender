@@ -1,40 +1,40 @@
 package com.jijojames.app.Controller;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
 import com.jijojames.app.Exception.DocumentNotFoundException;
-import com.jijojames.app.Exception.EmptyWebsiteException;
 import com.jijojames.app.Model.Website;
-import com.jijojames.app.Service.Firebase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-@Component
+@Controller
 public class FirestoreController {
+    private static final Logger logger = LoggerFactory.getLogger(FirestoreController.class);
+    private static final String COLLECTION_NAME = "websites";
+    private static final String MAIL_TEMPLATE = "mail-template";
+    private static final String EMAIL = "email";
 
     @Autowired
-    private Firebase firebase;
+    private Firestore firestore;
 
-    public Website getWebsite(String url) throws IOException, ExecutionException, InterruptedException, DocumentNotFoundException, EmptyWebsiteException {
-        if (url == null) {
-            throw new EmptyWebsiteException();
-        }
-
-        Website website;
-        Firestore firestore = firebase.getFireStore();
-        DocumentReference docRef = firestore.collection("websites").document(url);
+    public Website getWebsite(String url) throws ExecutionException, InterruptedException, DocumentNotFoundException {
+        DocumentReference docRef = firestore.collection(COLLECTION_NAME).document(url);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
-        if (document.exists()) {
-            String mailTemplate = (String) document.get("mail-template");
-            String email = (String) document.get("email");
-            website = new Website(url, mailTemplate, email);
-        } else {
-            throw new DocumentNotFoundException("Record " + url + " not found");
+
+        if (!document.exists()) {
+            logger.error("Website {} not found in firestore", url);
+            throw new DocumentNotFoundException();
         }
-        return website;
+
+        String mailTemplate = (String) document.get(MAIL_TEMPLATE);
+        String email = (String) document.get(EMAIL);
+        return new Website(url, mailTemplate, email);
     }
 }
