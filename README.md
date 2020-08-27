@@ -22,6 +22,19 @@ site| String | Site url configured in firebase |
 captcha | String | Captcha string |
 formData | Object | Form data in key/value pairs. The service substitues matching keys in mail template with the values |
 
+Note: If the formData has key subject, then the mail will have that value as the email subject else it will use the default subject `Contact form response`. If the formData has key email, then the mail will have that as the from address else it will use `EMAIL_FROM_ADDRESS` environment variable value as the from address.
+
+## Environment Variables
+The service requires a number of config data to be present as environment variables. These include the SDK credentials and service accounts as well.  
+
+Variable | Description |
+------|-------------|
+FIREBASE_CREDENTIALS | Service account JSON of App created in Firestore |
+RECAPTCHA_SITE_KEY | ReCaptcha server key |
+GMAIL_CREDENTIALS | Gmail credentials JSON of App created in Google Console |
+TOKEN_PATH | The path where the StoredCredential should be stored |
+EMAIL_FROM_ADDRESS | Default from address to be set in the emails sent |
+GMAIL_STORED_CREDENTIAL | Base64 encoded StoredCredential for Gmail |
 
 ### Send email
 
@@ -48,23 +61,38 @@ Sends email to the configured user
   * **Code:** 200 <br />
  
 * **Error Response:**
-
-  * **Code:** 500 NOT FOUND <br />
-    **Content:** `{ error : "User doesn't exist" }`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{ error-code: 100, "error-message" : "Captcha Verification failed" }`
+  
+  OR
+  
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{ error-code: 101, "error-message" : "Website url is not registered with the service" }`
+    
+  OR
+  
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{ error-code: 102, "error-message" : "Website url is not present in request" }`
 
   OR
 
+  * **Code:** 500 Internal Server Error <br />
+    **Content:** `{ error-code: 500, "error-message" : "An internal error occurred" }`
+
 * **Sample Call:**
 
-  ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "POST",
-      success : function(r) {
-        console.log(r);
-      }
-    });
+  ```
+  curl --location --request POST 'localhost:8080' --header 'Content-Type: application/json' --data-raw '{
+    "captcha": assssssssssasA12121Sdasdadr3232eqdda,
+    "site": "mysite.com",
+    "formData": {
+        "name": "Jijo",
+        "subject": "Hello",
+        "comments" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+    }
+  }'
+  ```
+   
 
 ### Tech stack
 * Java
@@ -80,5 +108,7 @@ Sends email to the configured user
 
 ### Reference
 * [Google Firebase](https://firebase.google.com/docs/admin/setup#java)
+* [Firebase Admin Console](https://console.firebase.google.com/)
 * [Gmail](https://developers.google.com/gmail/api/quickstart/java)
+* [Gmail Developer Console](https://console.developers.google.com)
 * [Google ReCaptcha](https://developers.google.com/recaptcha/docs/verify)
