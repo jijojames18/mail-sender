@@ -36,6 +36,7 @@ TOKEN_PATH | The path where the StoredCredential should be stored |
 EMAIL_FROM_ADDRESS | Default from address to be set in the emails sent |
 GMAIL_STORED_CREDENTIAL | Base64 encoded StoredCredential for Gmail |
 
+## API
 ### Send email
 
 Sends email to the configured user
