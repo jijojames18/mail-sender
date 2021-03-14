@@ -110,6 +110,6 @@ Sends email to the configured user
 ### Reference
 * [Google Firebase](https://firebase.google.com/docs/admin/setup#java)
 * [Firebase Admin Console](https://console.firebase.google.com/)
-* [Gmail](https://developers.google.com/gmail/api/quickstart/java)
+* [Gmail API](https://developers.google.com/gmail/api/quickstart/java)
 * [Gmail Developer Console](https://console.developers.google.com)
 * [Google ReCaptcha](https://developers.google.com/recaptcha/docs/verify)
