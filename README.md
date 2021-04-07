@@ -1,4 +1,4 @@
-# mail-sender
+# Mail Sender
 Microservice to send email to website administrator.  
 
 ## Description  
